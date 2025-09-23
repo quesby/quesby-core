@@ -1,0 +1,184 @@
+// TYPOGRAPHY
+//navigation
+
+// COLORS
+$cpal-1: #000000; //#0D1B2A;
+$cpal-3: #200867;
+$cpal-4: #6535E1;
+$cpal-5: #fff;
+$cpal-6: #30AD7B;
+
+$brand-orange: #FCC407;
+$brand-green: #008C45;
+$brand-white: #F4F5F0;
+$brand-red: #CD212A;
+
+$jet: #484349ff;
+$turquoise: #3ad1c3ff;
+$forest-green: #3a9141ff;
+$snow: #cacaca;
+$silver-lake-blue: #6290c8ff;
+$beaver: #96897bff;
+$earth-yellow: #dbad6aff;
+$turquoise: #3ad1c3ff;
+$buff: #cf995fff;
+$prussian-blue: #002642ff;
+//foregrounds
+$text-fg: $snow;
+$link-fg: color.adjust($text-fg, $lightness: -10%);
+$headlines-fg: #fff;
+$nav-item-fg: white;
+$button-fg: #0b0c13;
+//backgrounds
+$site-bg: $cpal-3;
+$site-bg-2: #FFF;
+$site-bg-3: #f1f1f1;
+$site-bg-radial: radial-gradient(#f1f1f1 25%,  #fff);
+$site-bg-linear-emphasy: linear-gradient(to left, transparent 80%,  $cpal-3 80%);
+$navigation-bg: $site-bg;
+$footer-bg: $site-bg;
+$button-bg: #e1e1e1;
+
+// LIGHT THEME
+$theme-light: (
+  text-fg: #3b2f2f,
+  link-fg: color.adjust($snow, $lightness: -10%),
+  headlines-fg: #000,
+  nav-item-fg: #3b2f2f,
+  button-fg: $button-fg,
+  site-bg: #fff,
+  site-bg-2: #f1f1f1,
+  site-bg-hover: color.adjust(#fff, $lightness: 5%),
+  site-bg-radial: radial-gradient(#f1f1f1 25%,  #fff),
+  navigation-bg: #fff,
+  subnav-bg: color.adjust(#fff, $lightness: 10%),
+  button-bg: #e1e1e1,
+  divider: color.adjust($snow, $lightness: -50%)
+);
+
+// DARK THEME
+$theme-dark: (
+  text-fg: $snow,
+  link-fg: color.adjust(#f5f5f5, $lightness: -10%),
+  headlines-fg: #fff,
+  nav-item-fg: $nav-item-fg,
+  button-fg: $button-fg,
+  site-bg: $site-bg,
+  site-bg-2: #111,
+  site-bg-hover: color.adjust(#000, $lightness: 5%),
+  site-bg-radial: radial-gradient(#111 25%,  #000),
+  navigation-bg: #000,
+  subnav-bg: #111,
+  button-bg: #484349ff,
+  divider: color.adjust(#f5f5f5, $lightness: -50%)
+);
+
+// SEPIA THEME
+$theme-sepia: (
+  text-fg: #3b2f2f,
+  link-fg: color.adjust(#3b2f2f, $lightness: -10%),
+  headlines-fg: #2a1d0a,
+  nav-item-fg: #3b2f2f,
+  button-fg: #2c251e,
+  site-bg: #f4ecd8,
+  site-bg-2: #efe2c6,
+  site-bg-hover: color.adjust(#f4ecd8, $lightness: 5%),
+  site-bg-radial: radial-gradient(#efe2c6 25%, #f4ecd8),
+  navigation-bg: #efe2c6,
+  subnav-bg: color.adjust(#efe2c6, $lightness: 10%),
+  button-bg: #d9c7a9,
+  divider: color.adjust(#3b2f2f, $lightness: 50%)
+);
+
+
+
+//social media
+$discord: #5865F2;
+$youtube: #FF0000;
+$twitch: #9146FF;
+$revolt: #FF4655;
+$twitter: #000000;
+$tiktok: #000000;
+$patreon: #000000;
+$kofi: #FF6433;
+$telegram: #26A5E4;
+
+// TRANSITIONS
+$transition: all .4s ease-in-out;
+
+// Paddings & Margins
+$padding: 20px;
+$margin: 20px;
+
+// Borders
+$borderRadius-large: 50px;
+$borderRadius-normal: 25px;
+$borderRadius-small: 7px;
+
+// Color palette exposed as CSS variables
+$palette: (
+  // Core palette
+  cpal-1: $cpal-1,
+  cpal-3: $cpal-3,
+  cpal-4: $cpal-4,
+  cpal-5: $cpal-5,
+  cpal-6: $cpal-6,
+  // Brand
+  brand-orange: $brand-orange,
+  brand-green: $brand-green,
+  brand-white: $brand-white,
+  brand-red: $brand-red,
+  // Named colors
+  jet: $jet,
+  turquoise: $turquoise,
+  forest-green: $forest-green,
+  snow: $snow,
+  silver-lake-blue: $silver-lake-blue,
+  beaver: $beaver,
+  earth-yellow: $earth-yellow,
+  buff: $buff,
+  prussian-blue: $prussian-blue,
+  // Neutral grays and blacks
+  neutral-111: #111111,
+  neutral-191919: #191919,
+  neutral-333: #333333,
+  neutral-555: #555555,
+  neutral-5a5a5a: #5a5a5a,
+  neutral-aaa: #aaaaaa,
+  neutral-eaeaea: #eaeaea,
+  neutral-f1f1f1: #f1f1f1,
+  neutral-1e1e1e: #1e1e1e,
+  // Accents used in pricing
+  accent-green: #00ffa2,
+  accent-green-hover: #00cc85,
+  accent-yellow: #ffc857,
+  // Derived brand variants
+  brand-green-darker-15: color.adjust($brand-green, $lightness: -15%),
+  brand-green-darker-5: color.adjust($brand-green, $lightness: -5%),
+  // Social media
+  discord: $discord,
+  youtube: $youtube,
+  twitch: $twitch,
+  revolt: $revolt,
+  twitter: $twitter,
+  tiktok: $tiktok,
+  patreon: $patreon,
+  kofi: $kofi,
+  telegram: $telegram
+);
+
+// Breakpoints system
+$breakpoints: (
+  smartphone: 650px,    // Mobile landscape
+  tablet: 1024px,   // Tablet landscape / Small desktop
+  laptop: 1440px,   // Large desktop
+  desktop: 1920px   // Ultra-wide
+);
+
+// Container max-widths
+$container-max-widths: (
+  smartphone: 630px,    // Mobile landscape
+  tablet: 1002px,   // Tablet landscape / Small desktop
+  laptop: 1280px,   // Large desktop
+  desktop: 1440px   // Ultra-wide
+);

@@ -1,0 +1,46 @@
+# Neutrino Legacy Content Importer Configuration
+# Example configuration for migrating content to Neutrino
+
+# Source and target directories
+source: "./old-blog"
+target: "./src/content/posts"
+
+# Default values
+author: "Your Name"
+imagePath: "/img/"
+
+# Field mappings (customize how legacy fields map to Neutrino fields)
+fieldMappings:
+  title:
+    - "page-title"
+    - "seoTitle" 
+    - "title"
+  description:
+    - "descrizione"
+    - "description"
+    - "excerpt"
+    - "summary"
+  date: "date"
+  tags: "tags"
+  category: "category"
+  image: "image"
+  author: "author"
+  draft: "draft"
+  featured: "featured"
+  type: "type"
+
+# Content processing
+content:
+  # Add category to tags
+  addCategoryToTags: true
+  
+  # Create aliases for old URLs
+  createAliases: true
+  
+  # Alias pattern (use {slug} placeholder)
+  aliasPattern: "/blog/{slug}/"
+
+# Backup settings
+backup:
+  enabled: true
+  directory: "backup-before-import"

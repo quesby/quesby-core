@@ -1,0 +1,127 @@
+@use 'sass:color';
+
+// TYPOGRAPHY
+$font-text: 'Geist', sans-serif;
+$font-headers: 'Geist', sans-serif;
+$font-slogans: 'Geist', sans-serif;
+$font-mono: 'Geist Mono', monospace;
+
+// COLORS
+// LIGHT THEME
+$theme-light: (
+  text-fg: oklch(31.85% 0.018 18.1),
+  link-fg: color.adjust(white, $lightness: -10%),
+  headlines-fg: oklch(0.00% 0.000 0.0),
+  nav-item-fg: oklch(31.85% 0.018 18.1),
+  button-fg: white,
+  button-secondary-fg:  oklch(15% 0.000 0),
+  site-bg: oklch(99% 0.000 89.9),
+  site-bg-2: oklch(95.81% 0.000 89.9),
+  site-bg-hover: color.adjust(oklch(100.00% 0.000 89.9), $lightness: 5%),
+  site-bg-radial: radial-gradient(oklch(95.81% 0.000 89.9) 25%,  oklch(100.00% 0.000 89.9)),
+  navigation-bg: var(--site-bg),
+  subnav-bg: color.adjust(oklch(100.00% 0.000 89.9), $lightness: 10%),
+  button-bg: oklch(15% 0 0),
+  button-secondary-bg: white,
+  border: oklch(85% 0 0),
+  divider: color.adjust(black, $lightness: -50%)
+);
+
+// DARK THEME
+$theme-dark: (
+  text-fg: white,
+  link-fg: color.adjust(white, $lightness: -10%),
+  headlines-fg: oklch(100.00% 0.000 89.9),
+  nav-item-fg: white,
+  button-fg: white,
+  button-secondary-fg: black,
+  site-bg: black,
+  site-bg-2: oklch(17.76% 0.000 89.9),
+  site-bg-hover: color.adjust(black, $lightness: 5%),
+  site-bg-radial: radial-gradient(oklch(17.76% 0.000 89.9) 25%, black),
+  navigation-bg: black,
+  subnav-bg: color.adjust(black, $lightness: 10%),
+  button-bg: oklch(39.00% 0.012 320.6),
+  button-secondary-bg: oklch(85% 0.000 0),
+  border: oklch(25% 0 0),
+  divider: color.adjust(white, $lightness: -50%)
+);
+
+// SEPIA THEME
+$theme-sepia: (
+  text-fg: oklch(31.85% 0.018 18.1),
+  link-fg: color.adjust(oklch(31.85% 0.018 18.1), $lightness: -10%),
+  headlines-fg: oklch(24.20% 0.037 74.8),
+  nav-item-fg: oklch(31.85% 0.018 18.1),
+  button-fg: oklch(27.00% 0.016 67.0),
+  button-secondary-fg: oklch(27.00% 0.016 67.0),
+  site-bg: oklch(94.40% 0.028 88.8),
+  site-bg-2: oklch(91.59% 0.040 86.1),
+  site-bg-hover: color.adjust(oklch(94.40% 0.028 88.8), $lightness: 5%),
+  site-bg-radial: radial-gradient(oklch(91.59% 0.040 86.1) 25%, oklch(94.40% 0.028 88.8)),
+  navigation-bg: oklch(91.59% 0.040 86.1),
+  subnav-bg: color.adjust(oklch(91.59% 0.040 86.1), $lightness: 10%),
+  button-bg: oklch(83.68% 0.045 80.5),
+  button-secondary-bg: oklch(83.68% 0.045 80.5),
+  border: oklch(75% 0.020 80.0),
+  divider: color.adjust(oklch(31.85% 0.018 18.1), $lightness: 50%)
+);
+
+// Color palette exposed as CSS variables
+$palette: (
+  // Core palette
+  cpal-1: black,
+  cpal-3: oklch(26.20% 0.145 281.1),
+  cpal-4: oklch(50.28% 0.239 287.0),
+  cpal-5: oklch(100.00% 0.000 89.9),
+  cpal-6: oklch(66.77% 0.132 161.8),
+  // Brand
+  // Neutral grays and blacks
+  neutral-111: oklch(17.76% 0.000 89.9),
+  neutral-191919: oklch(21.34% 0.000 89.9),
+  neutral-333: oklch(32.11% 0.000 89.9),
+  neutral-555: oklch(44.95% 0.000 89.9),
+  neutral-5a5a5a: oklch(46.76% 0.000 89.9),
+  neutral-aaa: oklch(73.80% 0.000 89.9),
+  neutral-eaeaea: oklch(93.70% 0.000 89.9),
+  neutral-f1f1f1: oklch(95.81% 0.000 89.9),
+  neutral-1e1e1e: oklch(23.50% 0.000 89.9),
+  // Social media
+  discord: oklch(57.74% 0.209 273.9),
+  youtube: oklch(62.80% 0.258 29.2),
+  twitch: oklch(59.08% 0.255 296.1),
+  revolt: oklch(66.77% 0.220 21.3),
+  twitter: oklch(0.00% 0.000 0.0),
+  tiktok: oklch(0.00% 0.000 0.0),
+  patreon: oklch(0.00% 0.000 0.0),
+  kofi: oklch(69.55% 0.199 37.3),
+  telegram: oklch(68.49% 0.139 236.8)
+);
+
+// TRANSITIONS
+$transition: all .4s ease-in-out;
+
+// Paddings & Margins
+$padding: 20px;
+$margin: 20px;
+
+// Borders
+$borderRadius-large: 50px;
+$borderRadius-normal: 25px;
+$borderRadius-small: 7px;
+
+// Breakpoints system
+$breakpoints: (
+  smartphone: 650px,
+  tablet: 1024px,
+  laptop: 1440px,
+  desktop: 1920px
+);
+
+// Container max-widths
+$container-max-widths: (
+  smartphone: 630px,
+  tablet: 1002px,
+  laptop: 1280px,
+  desktop: 1440px
+);

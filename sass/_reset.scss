@@ -1,0 +1,59 @@
+// Reset basic styles
+html, body, div, span, h1, h2, h3, h4, h5, h6, p, blockquote, pre, a, code, em, img, small, strong, sub, sup, ol, ul, li, fieldset, form, label, legend, table, caption, tbody, tfoot, thead, tr, th, td, article, aside, figure, footer, header, hgroup, menu, nav, section {
+    margin: 0;
+    padding: 0;
+    border: 0;
+    font-size: 100%;
+    font: inherit;
+    vertical-align: baseline;
+  }
+  
+  // HTML5 display-role reset for older browsers
+  article, aside, details, figcaption, figure, footer, header, hgroup, menu, nav, section {
+    display: block;
+  }
+  
+  // Body element
+  body {
+    line-height: 1;
+  }
+  
+  // Lists
+  ol, ul {
+    list-style: none;
+  }
+  
+  // Links
+  a {
+    text-decoration: none;
+  }
+  
+  // Remove default focus styles
+  a:focus, button:focus {
+    outline: none;
+  }
+  
+  // Tables
+  table {
+    border-collapse: collapse;
+    border-spacing: 0;
+  }
+  
+  // Remove default styling for form elements
+  button, input, select, textarea {
+    margin: 0;
+    padding: 0;
+    border: 0;
+    outline: 0;
+    font-size: 100%;
+    vertical-align: baseline;
+    background: transparent;
+  }
+  
+  // Set consistent box-sizing for all elements
+  * {
+    box-sizing: border-box;
+  }
+  
+  // Optionally add more resets or styles as needed
+  
