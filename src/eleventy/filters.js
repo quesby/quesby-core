@@ -7,6 +7,12 @@ export default function(eleventyConfig) {
     return DateTime.fromJSDate(dateObj, { zone: "utc" }).toFormat("yyyy-MM-dd");
   });
 
+  // URL encoding filter (equivalent to Liquid's url_encode)
+  eleventyConfig.addFilter("url_encode", str => {
+    if (!str) return "";
+    return encodeURIComponent(str);
+  });
+
    // Generic sort filter
    eleventyConfig.addFilter("sortBy", (arr, attr, direction = "asc") => {
     if (!Array.isArray(arr)) return arr;
