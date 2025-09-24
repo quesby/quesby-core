@@ -3,7 +3,7 @@
   "version": "0.1.0",
   "type": "module",
   "main": "index.js",
-  "files": ["src", "index.js"],
+  "files": ["src", "sass", "index.js"],
   "dependencies": {
     "@11ty/eleventy": "^3.0.0",
     "@11ty/eleventy-img": "^4.0.0",
