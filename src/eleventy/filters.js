@@ -47,4 +47,21 @@ export default function(eleventyConfig) {
     return arr.slice(n);
   });
 
+  // Date formatting with Luxon
+  eleventyConfig.addFilter("date", (dateObj, format = "dd LLLL yyyy") => {
+    let dt;
+
+    if (typeof dateObj === 'function') {
+      dateObj = dateObj();
+    }
+    if (typeof dateObj === 'string') {
+      dt = DateTime.fromISO(dateObj) || DateTime.fromSQL(dateObj) || DateTime.fromFormat(dateObj, 'yyyy-MM-dd');
+    } else if (dateObj instanceof Date) {
+      dt = DateTime.fromJSDate(dateObj);
+    } else {
+      dt = DateTime.fromJSDate(new Date(dateObj));
+    }
+
+    return dt.setZone("utc").setLocale("it").toFormat(format);
+  });
 }
