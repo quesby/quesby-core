@@ -47,6 +47,9 @@ export default function(eleventyConfig) {
     return arr.slice(n);
   });
 
+  // Add current year filter
+  eleventyConfig.addFilter("currentYear", () => new Date().getFullYear());
+
   // Date formatting with Luxon
   eleventyConfig.addFilter("date", (dateObj, format = "dd LLLL yyyy") => {
     let dt;
