@@ -51,7 +51,7 @@ export default function(eleventyConfig) {
   eleventyConfig.addFilter("currentYear", () => new Date().getFullYear());
 
   // Date formatting with Luxon
-  eleventyConfig.addFilter("date", (dateObj, format = "dd LLLL yyyy") => {
+  eleventyConfig.addFilter("date", (dateObj, format = "dd LLLL yyyy", locale = "en-US") => {
     let dt;
 
     if (typeof dateObj === 'function') {
@@ -65,8 +65,6 @@ export default function(eleventyConfig) {
       dt = DateTime.fromJSDate(new Date(dateObj));
     }
 
-    // Use site language from global data
-    const siteLanguage = this.ctx?.site?.language || "en-US";
-    return dt.setZone("utc").setLocale(siteLanguage).toFormat(format);
+    return dt.setZone("utc").setLocale(locale).toFormat(format);
   });
 }
