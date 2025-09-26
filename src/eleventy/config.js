@@ -400,13 +400,13 @@ export function createEleventyConfig() {
           // Unified path resolution - same logic as shortcode
           let imagePath;
           if (src.startsWith('/')) {
-            imagePath = path.resolve(process.cwd(), "website", "src", src.substring(1));
+            imagePath = path.resolve(process.cwd(), "src", src.substring(1));
           } else if (src.startsWith('content/')) {
-            imagePath = path.resolve(process.cwd(), "website", "src", src);
+            imagePath = path.resolve(process.cwd(), "src", src);
           } else if (src.startsWith('assets/')) {
-            imagePath = path.resolve(process.cwd(), "website", "src", src);
+            imagePath = path.resolve(process.cwd(), "src", src);
           } else {
-            imagePath = path.resolve(process.cwd(), "website", "src", src);
+            imagePath = path.resolve(process.cwd(), "src", src);
           }
 
           // Check if image exists
