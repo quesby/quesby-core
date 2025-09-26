@@ -65,6 +65,8 @@ export default function(eleventyConfig) {
       dt = DateTime.fromJSDate(new Date(dateObj));
     }
 
-    return dt.setZone("utc").setLocale("it").toFormat(format);
+    // Use site language from global data
+    const siteLanguage = this.ctx?.site?.language || "en-US";
+    return dt.setZone("utc").setLocale(siteLanguage).toFormat(format);
   });
 }
