@@ -418,7 +418,7 @@ export function createEleventyConfig() {
           // Process image with eleventy-img
           const metadata = await Image(imagePath, {
             widths: [320, 640, 960, 1280, null],
-            formats: ["avif", "webp", "jpeg"],
+            formats: ["avif", "webp"],
             outputDir: "./_site/assets/images/",
             urlPath: "/assets/images/",
           });
