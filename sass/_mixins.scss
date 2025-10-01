@@ -58,7 +58,7 @@
     display: inline-block;
     position: relative;
     overflow: hidden;
-    color: #fff; // Adjust text color as needed
+    color: #fff;
   
     &:before {
       content: "";
@@ -83,15 +83,14 @@
     display: inline-block;
     position: relative;
     text-decoration: none;
-    //color: #333; // Adjust text color as needed
   
     &:before {
         content: "";
         position: absolute;
         bottom: -5px;
         left: 0;
-        width: 0; // Initial width is 0
-        height: 7px; // Adjust the height of the underscore as needed
+        width: 0;
+        height: 7px;
         background-color: $color;
         transition: width $duration;
       }
@@ -115,8 +114,8 @@
       bottom: 0;
       left: 0;
       width: 100%;
-      transform: scaleX(0); // Initial width is 0
-      height: 5px; // Adjust the height of the underscore as needed
+      transform: scaleX(0);
+      height: 5px;
       background-color: $color;
       transition: transform $duration;
       transform-origin: 100% 50%;
@@ -130,7 +129,7 @@
   }
 
   // Responsive mixins
-  // Mixin principale per media queries
+  // Main mixin for media queries
 @mixin respond-to($breakpoint) {
   @if map.has-key($breakpoints, $breakpoint) {
     @media screen and (min-width: map.get($breakpoints, $breakpoint)) {
@@ -141,7 +140,7 @@
   }
 }
 
-// Mixin per container responsive
+// Mixin for responsive container
 @mixin container($size: desktop) {
   width: 100%;
   margin: 0 auto;
@@ -156,7 +155,7 @@
   }
 }
 
-// Mixin per typography fluida
+// Mixin for fluid typography
 @mixin fluid-text($min-size, $max-size, $min-width: 320px, $max-width: 1200px) {
   font-size: $min-size;
   
