@@ -1,8 +1,4 @@
-// uses
-@use 'sass:color';
-
-// imports
-@import '_reset';
-@import '_variables';
-@import '_mixins';
-@import '_typography';
+@use '_reset';
+@use '_variables';
+@use '_mixins';
+@use '_typography';

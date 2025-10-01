@@ -1,4 +1,6 @@
 @use 'sass:map';
+@use 'variables' as *;
+
 // Mixin for setting font properties
 @mixin font($properties) {
     font-style: map.get($properties, style);
