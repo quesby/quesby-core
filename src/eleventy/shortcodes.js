@@ -88,20 +88,33 @@ function imageShortcodeSync(src, alt = "", sizes = "100vw") {
 function svgShortcode(svgPath, className = "") {
   console.log(`[DEBUG] SVG shortcode called with: ${svgPath}, ${className}`);
   try {
-    const fullPath = path.join(process.cwd(), 'src', svgPath);
+    const fullPath = path.join(process.cwd(), "src", svgPath);
     console.log(`[DEBUG] Full path: ${fullPath}`);
-    const svgContent = fs.readFileSync(fullPath, 'utf8');
+    const svgContent = fs.readFileSync(fullPath, "utf8");
     console.log(`[DEBUG] SVG content length: ${svgContent.length}`);
-    
-    // Remove existing <svg> tags and add the class
-    const cleanSvg = svgContent
-      .replace(/<svg([^>]*)>/, `<svg$1 class="${className}"`)
-      .replace(/<\/svg>/, '');
-      
+
+    const cleanSvg = svgContent.replace(/<svg([^>]*)>/, (match, attrs) => {
+      // cerca attributo class
+      const classAttrMatch = attrs.match(/class="([^"]*)"/);
+
+      if (classAttrMatch) {
+        // se esiste già, append
+        const existingClasses = classAttrMatch[1];
+        const mergedClasses = `${existingClasses} ${className}`.trim();
+        return match.replace(
+          /class="[^"]*"/,
+          `class="${mergedClasses}"`
+        );
+      } else {
+        // altrimenti aggiungi attributo class
+        return `<svg${attrs} class="${className}">`;
+      }
+    });
+
     return cleanSvg;
   } catch (error) {
     console.error(`Error loading SVG: ${svgPath}`, error);
-    return '';
+    return "";
   }
 }
 
