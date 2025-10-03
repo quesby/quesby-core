@@ -1,6 +1,0 @@
-// tools/legacy-content-importer/.gitignore
-node_modules/
-*.log
-.DS_Store
-Thumbs.db
-backup-*

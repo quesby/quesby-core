@@ -4,10 +4,7 @@ import Image from "@11ty/eleventy-img";
 
 // Unified image shortcode - ASYNC
 async function imageShortcode(src, alt = "", sizes = "100vw") {
-  console.log(`[DEBUG] imageShortcode called with: src="${src}", alt="${alt}", sizes="${sizes}"`);
-  
   if (!src) {
-    console.log(`[DEBUG] No src provided, returning empty string`);
     return "";
   }
   if (!alt) throw new Error(`Missing alt for ${src}`);
@@ -28,8 +25,6 @@ async function imageShortcode(src, alt = "", sizes = "100vw") {
     resolved = path.join(process.cwd(), "src", src);
   }
   
-  console.log(`[DEBUG] Resolved path: ${resolved}`);
-
   if (!fs.existsSync(resolved)) {
     console.warn(`[imageShortcode] File not found: ${resolved}`);
     return `<img src="${src}" alt="${alt}" loading="lazy" decoding="async">`;
@@ -86,12 +81,9 @@ function imageShortcodeSync(src, alt = "", sizes = "100vw") {
 
 // Shortcode for SVG inline
 function svgShortcode(svgPath, className = "") {
-  console.log(`[DEBUG] SVG shortcode called with: ${svgPath}, ${className}`);
   try {
     const fullPath = path.join(process.cwd(), "src", svgPath);
-    console.log(`[DEBUG] Full path: ${fullPath}`);
     const svgContent = fs.readFileSync(fullPath, "utf8");
-    console.log(`[DEBUG] SVG content length: ${svgContent.length}`);
 
     const cleanSvg = svgContent.replace(/<svg([^>]*)>/, (match, attrs) => {
       // cerca attributo class
@@ -126,10 +118,8 @@ function imageSimpleShortcode(src, alt, className = "") {
 }
 
 export default (cfg)=> {
-  console.log('[DEBUG] Registering shortcodes...');
   cfg.addNunjucksAsyncShortcode("image", imageShortcode);
   cfg.addNunjucksShortcode("imageSync", imageShortcodeSync);
   cfg.addNunjucksShortcode("imageSimple", imageSimpleShortcode);
   cfg.addNunjucksShortcode("svg", svgShortcode);
-  console.log('[DEBUG] Shortcodes registered');
 };
