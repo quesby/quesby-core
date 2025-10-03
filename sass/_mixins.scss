@@ -1,7 +1,7 @@
 @use 'sass:map';
 @use 'variables' as *;
 
-// Mixin for setting font properties
+// Mixin to set font properties
 @mixin font($properties) {
     font-style: map.get($properties, style);
     font-variant: map.get($properties, variant);
@@ -12,7 +12,7 @@
     text-transform: map.get($properties, transform);
   }
 
-// Mixin per generare le regole @font-face
+// Mixin to generate @font-face rules
 @mixin font-face($font-family, $font-path, $weights: (), $display: swap) {
   @each $weight, $file in $weights {
     @font-face {
@@ -24,7 +24,7 @@
   }
 }
 
-// Mappa per il Font
+// Font Map
 @mixin apply-map($map) {
   @each $key, $value in $map {
     #{$key}: $value;
