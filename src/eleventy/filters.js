@@ -47,6 +47,19 @@ export default function(eleventyConfig) {
     return arr.slice(n);
   });
 
+  // Exclude current item from array
+  eleventyConfig.addFilter("exclude", (arr, current) => {
+    if (!Array.isArray(arr) || !current) return arr || [];
+    const currUrl = current.url || current.page?.url;
+    const currPath = current.inputPath || current.page?.inputPath;
+    const currSlug = current.fileSlug || current.page?.fileSlug;
+    return arr.filter(item =>
+      item.url !== currUrl &&
+      item.inputPath !== currPath &&
+      item.fileSlug !== currSlug
+    );
+  });
+
   // Add current year filter
   eleventyConfig.addFilter("currentYear", () => new Date().getFullYear());
 
