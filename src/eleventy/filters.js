@@ -81,7 +81,7 @@ export default function(eleventyConfig) {
     return dt.setZone("utc").setLocale(locale).toFormat(format);
   });
 
-  // Add filter categories from colletion
+  // Add filter categories from collection
   eleventyConfig.addFilter("categoryListFrom", (items = []) => {
     const slugify = eleventyConfig.getFilter("slugify");
     const map = new Map(); // slug -> display name
@@ -97,6 +97,27 @@ export default function(eleventyConfig) {
         if (!map.has(slug)) map.set(slug, name);
       });
     });
+    return Array.from(map, ([slug, name]) => ({ slug, name }));
+  });
+
+  // Add filter tags from collection
+  eleventyConfig.addFilter("tagListFrom", (items = []) => {
+    const slugify = eleventyConfig.getFilter("slugify");
+    const exclude = new Set(["all", "nav", "post", "posts"]);
+    const map = new Map(); // slug -> display name
+  
+    items.forEach((item) => {
+      const t = item.data?.tags;
+      if (!t) return;
+      (Array.isArray(t) ? t : [t]).forEach((tag) => {
+        const name = String(tag || "").trim();
+        if (!name || exclude.has(name)) return;
+        const slug = slugify(name);
+        if (!slug) return;
+        if (!map.has(slug)) map.set(slug, name);
+      });
+    });
+  
     return Array.from(map, ([slug, name]) => ({ slug, name }));
   });
   
