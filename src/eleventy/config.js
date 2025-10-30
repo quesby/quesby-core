@@ -172,6 +172,46 @@ export function createEleventyConfig() {
       });
     });
 
+    const TAGS_EXCLUDE = new Set(["all", "nav", "post", "posts"]);
+
+    // Tags list
+    eleventyConfig.addCollection("tagList", (collectionApi) => {
+      const set = new Set();
+      collectionApi.getAll().forEach((item) => {
+        const t = item.data.tags;
+        if (!t) return;
+        const arr = Array.isArray(t) ? t : [t];
+        arr.forEach((tag) => {
+          if (tag && !TAGS_EXCLUDE.has(tag)) set.add(tag);
+        });
+      });
+      return [...set].sort((a, b) => a.localeCompare(b));
+    });
+
+    // List of categories (supports `category` as string or `categories` as array)
+    eleventyConfig.addCollection("categoryList", (collectionApi) => {
+      const set = new Set();
+      collectionApi.getAll().forEach((item) => {
+        const c = item.data.category ?? item.data.categories;
+        if (!c) return;
+        const arr = Array.isArray(c) ? c : [c];
+        arr.forEach((cat) => { if (cat) set.add(cat); });
+      });
+      return [...set].sort((a, b) => a.localeCompare(b));
+    });
+
+    // Shortcode: stampa tutti i tag come stringa (separatore configurabile)
+    eleventyConfig.addShortcode("allTags", function (collections, separator = ", ") {
+      const list = collections.tagList || [];
+      return list.join(separator);
+    });
+
+    // Shortcode: stampa tutte le categorie come stringa (separatore configurabile)
+    eleventyConfig.addShortcode("allCategories", function (collections, separator = ", ") {
+      const list = collections.categoryList || [];
+      return list.join(separator);
+    });
+
     eleventyConfig.addFilter("slugify", str =>
       slugify(str, { lower: true, strict: true })
     );
