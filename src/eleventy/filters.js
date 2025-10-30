@@ -80,4 +80,24 @@ export default function(eleventyConfig) {
 
     return dt.setZone("utc").setLocale(locale).toFormat(format);
   });
+
+  // Add filter categories from colletion
+  eleventyConfig.addFilter("categoryListFrom", (items = []) => {
+    const slugify = eleventyConfig.getFilter("slugify");
+    const map = new Map(); // slug -> display name
+    items.forEach((item) => {
+      const c = item.data?.category ?? item.data?.categories;
+      if (!c) return;
+      (Array.isArray(c) ? c : [c]).forEach((cat) => {
+        if (!cat) return;
+        const name = String(cat).trim();
+        if (!name) return;
+        const slug = slugify(name);
+        if (!slug) return;
+        if (!map.has(slug)) map.set(slug, name);
+      });
+    });
+    return Array.from(map, ([slug, name]) => ({ slug, name }));
+  });
+  
 }

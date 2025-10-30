@@ -172,45 +172,83 @@ export function createEleventyConfig() {
       });
     });
 
-    const TAGS_EXCLUDE = new Set(["all", "nav", "post", "posts"]);
+ // Normalize and map by slug
+const TAGS_EXCLUDE = new Set(["all", "nav", "post", "posts"]);
 
-    // Tags list
-    eleventyConfig.addCollection("tagList", (collectionApi) => {
-      const set = new Set();
-      collectionApi.getAll().forEach((item) => {
-        const t = item.data.tags;
-        if (!t) return;
-        const arr = Array.isArray(t) ? t : [t];
-        arr.forEach((tag) => {
-          if (tag && !TAGS_EXCLUDE.has(tag)) set.add(tag);
-        });
-      });
-      return [...set].sort((a, b) => a.localeCompare(b));
+eleventyConfig.addCollection("tagList", (collectionApi) => {
+  const slugify = eleventyConfig.getFilter("slugify");
+  const map = new Map(); // slug -> display name
+  collectionApi.getAll().forEach((item) => {
+    const t = item.data.tags;
+    if (!t) return;
+    (Array.isArray(t) ? t : [t]).forEach((tag) => {
+      if (!tag) return;
+      const name = String(tag).trim();
+      if (!name || TAGS_EXCLUDE.has(name)) return;
+      const slug = slugify(name);
+      if (!slug) return;
+      if (!map.has(slug)) map.set(slug, name);
     });
+  });
+  return Array.from(map, ([slug, name]) => ({ slug, name }));
+});
 
-    // List of categories (supports `category` as string or `categories` as array)
-    eleventyConfig.addCollection("categoryList", (collectionApi) => {
-      const set = new Set();
-      collectionApi.getAll().forEach((item) => {
-        const c = item.data.category ?? item.data.categories;
-        if (!c) return;
-        const arr = Array.isArray(c) ? c : [c];
-        arr.forEach((cat) => { if (cat) set.add(cat); });
-      });
-      return [...set].sort((a, b) => a.localeCompare(b));
+eleventyConfig.addCollection("postsByTagSlug", (collectionApi) => {
+  const slugify = eleventyConfig.getFilter("slugify");
+  const map = new Map(); // slug -> posts[]
+  collectionApi.getAll().forEach((item) => {
+    const t = item.data.tags;
+    if (!t) return;
+    (Array.isArray(t) ? t : [t]).forEach((tag) => {
+      if (!tag) return;
+      const name = String(tag).trim();
+      if (!name || TAGS_EXCLUDE.has(name)) return;
+      const slug = slugify(name);
+      if (!slug) return;
+      if (!map.has(slug)) map.set(slug, []);
+      map.get(slug).push(item);
     });
+  });
+  // convert to plain object for templates
+  return Object.fromEntries(map);
+});
 
-    // Shortcode: stampa tutti i tag come stringa (separatore configurabile)
-    eleventyConfig.addShortcode("allTags", function (collections, separator = ", ") {
-      const list = collections.tagList || [];
-      return list.join(separator);
+eleventyConfig.addCollection("categoryList", (collectionApi) => {
+  const slugify = eleventyConfig.getFilter("slugify");
+  const map = new Map(); // slug -> display name
+  collectionApi.getAll().forEach((item) => {
+    const c = item.data.category ?? item.data.categories;
+    if (!c) return;
+    (Array.isArray(c) ? c : [c]).forEach((cat) => {
+      if (!cat) return;
+      const name = String(cat).trim();
+      if (!name) return;
+      const slug = slugify(name);
+      if (!slug) return;
+      if (!map.has(slug)) map.set(slug, name);
     });
+  });
+  return Array.from(map, ([slug, name]) => ({ slug, name }));
+});
 
-    // Shortcode: stampa tutte le categorie come stringa (separatore configurabile)
-    eleventyConfig.addShortcode("allCategories", function (collections, separator = ", ") {
-      const list = collections.categoryList || [];
-      return list.join(separator);
+eleventyConfig.addCollection("postsByCategorySlug", (collectionApi) => {
+  const slugify = eleventyConfig.getFilter("slugify");
+  const map = new Map(); // slug -> posts[]
+  collectionApi.getAll().forEach((item) => {
+    const c = item.data.category ?? item.data.categories;
+    if (!c) return;
+    (Array.isArray(c) ? c : [c]).forEach((cat) => {
+      if (!cat) return;
+      const name = String(cat).trim();
+      if (!name) return;
+      const slug = slugify(name);
+      if (!slug) return;
+      if (!map.has(slug)) map.set(slug, []);
+      map.get(slug).push(item);
     });
+  });
+  return Object.fromEntries(map);
+});
 
     eleventyConfig.addFilter("slugify", str =>
       slugify(str, { lower: true, strict: true })
