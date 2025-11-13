@@ -1,6 +1,9 @@
 {
-  "name": "@neutrino/core",
-  "version": "0.1.0",
+  "name": "@neutrino-cms/neutrino-core",
+  "version": "0.1.1-alpha.0",
+  "publishConfig": {
+    "registry": "https://npm.pkg.github.com/"
+  },
   "type": "module",
   "main": "index.js",
   "files": [
