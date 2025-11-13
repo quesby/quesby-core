@@ -3,26 +3,29 @@
   "version": "0.1.0",
   "type": "module",
   "main": "index.js",
-  "files": ["src", "sass", "index.js"],
+  "files": [
+    "src",
+    "sass",
+    "index.js"
+  ],
   "dependencies": {
-    "@11ty/eleventy": "^3.0.0",
-    "@11ty/eleventy-img": "^4.0.0",
+    "@11ty/eleventy": "^3.1.2",
+    "@11ty/eleventy-img": "^4.0.2",
     "@11ty/eleventy-plugin-rss": "^1.2.0",
-    "slugify": "^1.6.6",
-    "markdown-it": "^14.0.0",
-    "markdown-it-link-attributes": "^4.0.0",
-    "dotenv": "^16.4.5",
-    "unified": "^11.0.0",
-    "remark-parse": "^11.0.0",
-    "remark-gfm": "^4.0.0",
-    "remark-rehype": "^11.0.0",
+    "cheerio": "^1.1.2",
+    "dotenv": "^16.6.1",
+    "luxon": "^3.7.2",
+    "markdown-it": "^14.1.0",
+    "markdown-it-link-attributes": "^4.0.1",
     "rehype-expressive-code": "^0.41.3",
-    "rehype-stringify": "^10.0.0",
-    "luxon": "^3.4.4",
-    "cheerio": "^1.0.0-rc.12"
+    "rehype-stringify": "^10.0.1",
+    "remark-gfm": "^4.0.1",
+    "remark-parse": "^11.0.0",
+    "remark-rehype": "^11.1.2",
+    "slugify": "^1.6.6",
+    "unified": "^11.0.5"
   },
   "peerDependencies": {
-    "sass": "^1.77.0"
+    "sass": ">=1.93.3 <2.0.0"
   }
 }
-  
