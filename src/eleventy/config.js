@@ -31,7 +31,7 @@ export function createEleventyConfig() {
 
   /**
    * Replace ${VARNAME} in a string with corresponding process.env values.
-   * Example: "${NEUTRINO_CONTENT_PATH}" → "D:/..."
+   * Example: "${QUESBY_CONTENT_PATH}" → "D:/..."
    */
   function expandEnv(str) {
     if (typeof str !== "string") return str;
@@ -88,7 +88,7 @@ export function createEleventyConfig() {
     if (!fs.existsSync(contentPath)) {
       throw new Error(
         `❌ Content path not found:\n${contentPath}\n\n` +
-        `Check your contentPath in site.json or the .env variable NEUTRINO_CONTENT_PATH`
+        `Check your contentPath in site.json or the .env variable QUESBY_CONTENT_PATH`
       );
     }
 
@@ -116,7 +116,7 @@ export function createEleventyConfig() {
   return function(eleventyConfig) {
     // Load theme from site.json configuration
     const siteData = JSON.parse(fs.readFileSync(sitePath, 'utf8'));
-    const activeTheme = siteData.theme || "neutrino-electron-core";
+    const activeTheme = siteData.theme || "quesby-core";
 
     // Watch folders
     eleventyConfig.addWatchTarget("src/_data");
@@ -134,7 +134,7 @@ export function createEleventyConfig() {
 
     // Copy SCSS files from core to website
     eleventyConfig.addPassthroughCopy({ 
-      "packages/@neutrino/core/src/sass": "/sass" 
+      "packages/@quesby/core/src/sass": "/sass" 
     });
 
     // Global variable for Nunjucks templates

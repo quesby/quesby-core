@@ -1,6 +1,22 @@
 {
-  "name": "@neutrino-cms/neutrino-core",
+  "name": "@quesby/core",
   "version": "0.1.1-alpha.0",
+  "description": "Core library for Quesby static site builder",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/quesby/quesby-core.git"
+  },
+  "homepage": "https://github.com/quesby/quesby-core#readme",
+  "bugs": {
+    "url": "https://github.com/quesby/quesby-core/issues"
+  },
+  "keywords": [
+    "quesby",
+    "static-site",
+    "eleventy",
+    "privacy-first"
+  ],
   "publishConfig": {
     "registry": "https://npm.pkg.github.com/"
   },
