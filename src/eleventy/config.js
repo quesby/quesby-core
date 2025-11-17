@@ -140,7 +140,20 @@ export function createEleventyConfig() {
     // Global variable for Nunjucks templates
     eleventyConfig.addGlobalData("theme", activeTheme);
 
-    // add collections for posts, projects, and documentation
+    // add collections for sitemap, posts and documentation
+    eleventyConfig.addCollection("sitemap", function (api) {
+      return api.getAll().filter(page => {
+        if (!page.url) return false;
+        if (page.data.eleventyExcludeFromCollections) return false;
+        if (page.data.noindex) return false;
+        if (page.url === "/404.html") return false;
+        if (page.url.startsWith("/admin")) return false;
+        if (page.url.endsWith("xml")) return false;
+        if (page.url.endsWith("json")) return false;
+        return true;
+      });
+    });
+
     eleventyConfig.addCollection('posts', collection => {
       // Support both old format (ULID only) and new format (ULID--slug)
       const posts = collection.getFilteredByGlob([
