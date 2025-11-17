@@ -3,11 +3,25 @@ import fs from "fs";
 import Image from "@11ty/eleventy-img";
 
 // Unified image shortcode - ASYNC
-async function imageShortcode(src, alt = "", sizes = "100vw") {
+async function imageShortcode(src, alt = "", sizesOrAttrs = "100vw", attrs = {}) {
   if (!src) {
     return "";
   }
   if (!alt) throw new Error(`Missing alt for ${src}`);
+
+  // Determine sizes and attributes based on third parameter type
+  let sizes = "100vw";
+  let htmlAttrs = {};
+  
+  if (typeof sizesOrAttrs === "string" || sizesOrAttrs === undefined) {
+    // Third param is sizes (string) or undefined
+    sizes = sizesOrAttrs || "100vw";
+    htmlAttrs = attrs || {};
+  } else if (typeof sizesOrAttrs === "object" && sizesOrAttrs !== null) {
+    // Third param is attributes object
+    sizes = "100vw";
+    htmlAttrs = sizesOrAttrs;
+  }
 
   // Unified path resolution - handle different input patterns
   let resolved;
@@ -27,7 +41,11 @@ async function imageShortcode(src, alt = "", sizes = "100vw") {
   
   if (!fs.existsSync(resolved)) {
     console.warn(`[imageShortcode] File not found: ${resolved}`);
-    return `<img src="${src}" alt="${alt}" loading="lazy" decoding="async">`;
+    const fallbackAttrs = { loading: "lazy", decoding: "async", ...htmlAttrs };
+    const attrsString = Object.entries(fallbackAttrs)
+      .map(([key, value]) => `${key}="${value}"`)
+      .join(" ");
+    return `<img src="${src}" alt="${alt}" ${attrsString}>`;
   }
 
   const metadata = await Image(resolved, {
@@ -41,12 +59,27 @@ async function imageShortcode(src, alt = "", sizes = "100vw") {
     alt,
     sizes,
     loading: "lazy",
-    decoding: "async"
+    decoding: "async",
+    ...htmlAttrs
   });
 }
 
 // Shortcode for images - SYNC (for cases where async is not possible)
-function imageShortcodeSync(src, alt = "", sizes = "100vw") {
+function imageShortcodeSync(src, alt = "", sizesOrAttrs = "100vw", attrs = {}) {
+  // Determine sizes and attributes based on third parameter type
+  let sizes = "100vw";
+  let htmlAttrs = {};
+  
+  if (typeof sizesOrAttrs === "string" || sizesOrAttrs === undefined) {
+    // Third param is sizes (string) or undefined
+    sizes = sizesOrAttrs || "100vw";
+    htmlAttrs = attrs || {};
+  } else if (typeof sizesOrAttrs === "object" && sizesOrAttrs !== null) {
+    // Third param is attributes object
+    sizes = "100vw";
+    htmlAttrs = sizesOrAttrs;
+  }
+
   // Use same path resolution logic as async version
   let resolved;
   if (src.startsWith('/')) {
@@ -61,7 +94,11 @@ function imageShortcodeSync(src, alt = "", sizes = "100vw") {
 
   if (!fs.existsSync(resolved)) {
     console.warn(`[imageShortcodeSync] File not found: ${resolved}`);
-    return `<img src="${src}" alt="${alt}" loading="lazy" decoding="async">`;
+    const fallbackAttrs = { loading: "lazy", decoding: "async", ...htmlAttrs };
+    const attrsString = Object.entries(fallbackAttrs)
+      .map(([key, value]) => `${key}="${value}"`)
+      .join(" ");
+    return `<img src="${src}" alt="${alt}" ${attrsString}>`;
   }
 
   const metadata = Image.statsSync(resolved, {
@@ -75,7 +112,8 @@ function imageShortcodeSync(src, alt = "", sizes = "100vw") {
     alt, 
     sizes, 
     loading: "lazy", 
-    decoding: "async" 
+    decoding: "async",
+    ...htmlAttrs
   });
 }
 
