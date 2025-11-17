@@ -1,2 +1,4 @@
 .npmrc
 /node_modules
+
+*.code-workspace
