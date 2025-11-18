@@ -2,3 +2,17 @@
 /node_modules
 
 *.code-workspace
+
+*.tgz
+*.tar
+*.zip
+*.gz
+*.bz2
+*.rar
+*.7z
+*.tar.gz
+*.tar.bz2
+*.tar.xz
+*.tar.lzma
+*.tar.lz
+*.tar.lz4
