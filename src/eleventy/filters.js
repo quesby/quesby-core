@@ -78,7 +78,32 @@ export default function(eleventyConfig) {
       dt = DateTime.fromJSDate(new Date(dateObj));
     }
 
-    return dt.setZone("utc").setLocale(locale).toFormat(format);
+    // Validate and normalize locale
+    // Luxon accepts locales like "en-US", "en_US", "en", etc.
+    // Normalize underscore to hyphen and validate
+    let validLocale = "en-US";
+    if (locale && typeof locale === "string" && locale.trim()) {
+      // Normalize locale format (en_US -> en-US)
+      const normalized = locale.trim().replace(/_/g, "-");
+      // Try to use the locale with Luxon, fallback on error
+      try {
+        // Test if locale is valid by trying to set it
+        dt.setLocale(normalized);
+        validLocale = normalized;
+      } catch (e) {
+        // If locale fails, try just the language code (en-US -> en)
+        const langCode = normalized.split("-")[0];
+        try {
+          dt.setLocale(langCode);
+          validLocale = langCode;
+        } catch (e2) {
+          // Fallback to default
+          validLocale = "en-US";
+        }
+      }
+    }
+
+    return dt.setZone("utc").setLocale(validLocale).toFormat(format);
   });
 
   // Add filter categories from collection
