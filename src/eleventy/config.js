@@ -128,10 +128,6 @@ export function createEleventyConfig() {
     eleventyConfig.addPassthroughCopy({ "src/assets": "/assets" });
     eleventyConfig.addPassthroughCopy({ "src/admin": "/admin" });
 
-    // Pass-through for content media - copy only post directories
-    eleventyConfig.addPassthroughCopy({ "src/content/posts": "/content/posts" });
-    eleventyConfig.addPassthroughCopy({ "src/content/media": "/content/media" });
-
     // Copy SCSS files from core to website
     eleventyConfig.addPassthroughCopy({ 
       "packages/@quesby/core/src/sass": "/sass" 
