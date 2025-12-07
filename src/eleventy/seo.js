@@ -1,5 +1,103 @@
 import { absoluteUrl } from "./utils/url.js";
 import { DateTime } from "luxon";
+import path from "node:path";
+import fs from "fs";
+import Image from "@11ty/eleventy-img";
+
+/**
+ * Process image with Eleventy Image and return processed URL
+ * Returns the URL of the processed image (largest size) or fallback to original URL
+ */
+function processSeoImage(imageSrc, siteUrl) {
+  if (!imageSrc || imageSrc.includes("http")) {
+    // If already absolute URL or empty, return as-is
+    return imageSrc ? absoluteUrl(imageSrc, siteUrl) : null;
+  }
+
+  // Try to resolve image path using same logic as image shortcode
+  const possiblePaths = [];
+  
+  // If starts with /, try src/ + path
+  if (imageSrc.startsWith('/')) {
+    possiblePaths.push(path.join(process.cwd(), "src", imageSrc.substring(1)));
+  }
+  // If starts with content/ or assets/, try src/ + path
+  else if (imageSrc.startsWith('content/') || imageSrc.startsWith('assets/')) {
+    possiblePaths.push(path.join(process.cwd(), "src", imageSrc));
+  }
+  // Try common post image paths
+  else {
+    // Try /content/media/posts/ + filename (common pattern for posts)
+    possiblePaths.push(path.join(process.cwd(), "src", "content", "media", "posts", imageSrc));
+    // Try content/media/posts/ + filename
+    possiblePaths.push(path.join(process.cwd(), "src", "content/media/posts", imageSrc));
+    // Try assets/images/ + filename
+    possiblePaths.push(path.join(process.cwd(), "src", "assets/images", imageSrc));
+    // Try src/ + filename as fallback
+    possiblePaths.push(path.join(process.cwd(), "src", imageSrc));
+  }
+
+  // Find first existing path
+  let resolvedPath = null;
+  for (const testPath of possiblePaths) {
+    if (fs.existsSync(testPath)) {
+      resolvedPath = testPath;
+      break;
+    }
+  }
+
+  if (!resolvedPath) {
+    // Image not found, return original URL as fallback
+    return absoluteUrl(imageSrc, siteUrl);
+  }
+
+  try {
+    // Process image with Eleventy Image (sync version)
+    const metadata = Image.statsSync(resolvedPath, {
+      widths: [320, 640, 960, 1280, null],
+      formats: ["avif", "webp"],
+      outputDir: "./_site/assets/images/",
+      urlPath: "/assets/images/",
+    });
+
+    // Get the largest image (prefer webp, then avif, then original format)
+    let largestImage = null;
+
+    // Prefer webp format if available
+    if (metadata.webp && metadata.webp.length > 0) {
+      // Get largest webp (sort by width descending)
+      const webpImages = metadata.webp.sort((a, b) => (b.width || 0) - (a.width || 0));
+      largestImage = webpImages[0];
+    } 
+    // Fallback to avif
+    else if (metadata.avif && metadata.avif.length > 0) {
+      const avifImages = metadata.avif.sort((a, b) => (b.width || 0) - (a.width || 0));
+      largestImage = avifImages[0];
+    }
+    // Fallback to any other format
+    else {
+      for (const format in metadata) {
+        if (metadata[format] && metadata[format].length > 0) {
+          const images = metadata[format].sort((a, b) => (b.width || 0) - (a.width || 0));
+          largestImage = images[0];
+          break;
+        }
+      }
+    }
+
+    if (largestImage) {
+      // Return absolute URL of processed image
+      return absoluteUrl(largestImage.url, siteUrl);
+    }
+
+    // Fallback to original URL if processing succeeded but no image found
+    return absoluteUrl(imageSrc, siteUrl);
+  } catch (error) {
+    // If processing fails, return original URL as fallback
+    console.warn(`[SEO] Failed to process image ${imageSrc}:`, error.message);
+    return absoluteUrl(imageSrc, siteUrl);
+  }
+}
 
 /**
  * Build SEO model from page, site, and data
@@ -12,10 +110,10 @@ export function buildSeoModel(page, site, data = {}) {
   // Resolve description with fallback
   const seoDescription = data.postDescription || data.description || site.description || "";
   
-  // Resolve image with fallback and make absolute
+  // Resolve image with fallback and process with Eleventy Image
   let seoImage = data.postImage || data.image || site.socialImage || null;
-  if (seoImage && !seoImage.includes("http")) {
-    seoImage = absoluteUrl(seoImage, site.url);
+  if (seoImage) {
+    seoImage = processSeoImage(seoImage, site.url);
   }
   
   // Build page URL
